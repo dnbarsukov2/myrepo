@@ -1,0 +1,16 @@
+---
+- hosts: db
+  become: yes
+  collections:
+    - garutilorenzo.ansible_collection_elk
+  vars_files:
+    - vars.yml
+  tasks:
+    - import_role:
+        name: elasticsearch 
+    - import_role:
+        name: kibana
+    - import role:
+        name: logstash 
+    - import_role: 
+        name: beats

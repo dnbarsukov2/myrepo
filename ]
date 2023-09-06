@@ -1,0 +1,31 @@
+---
+- name: zabbix-agent systemd
+  systemd:
+    name: zabbix-agent.service
+    enabled: yes
+    state: started
+- name: apache2 systemd
+  systemd:
+    name: apache2.service
+    enabled: yes
+    state: started
+- name: nginx systemd
+  systemd:
+    name: nginx.service
+    enabled: yes
+    state: started
+- name: bind9 systemd
+  systemd:
+    name: bind9.service
+    enabled: yes
+    state: started
+- name: postfix systemd
+  systemd:
+    name: postfix.service
+    enabled: yes
+    state: started
+- name: filebeat systemd
+  systemd:
+    name: filebeat.service
+    enabled: yes
+    state: started

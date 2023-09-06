@@ -1,0 +1,46 @@
+---
+- hosts: web
+  become: yes
+  vars:
+      http_port: "8080"
+      http_host: "ubuntu1"
+      http_conf: "ubuntu1.conf"
+
+  tasks:
+      - name: Install Nginx Web Server
+        apt:
+          name=nginx
+          state=latest
+        when:
+           ansible_os_family == "Debian"
+        notify:
+        - nginx systemd
+      - name: Install Apache2 Web Server
+        apt:
+          name=apache2
+          state=latest
+        when:
+           ansible_os_family == "Debian"
+        notify:
+        - apache2 systemd
+
+      - name UFW Allow port
+        ufw:
+           rule: allow
+           port: "{{ http_port }}"
+           proto: tcp
+
+
+
+  handlers:
+    - name: Restart Nginx
+      systemd:
+        name: nginx
+        enabled: yes
+        state: started
+      
+    - name: Restart Apache2
+      systemd:
+        name: apache2
+        enabled: yes
+        state: stoped

@@ -1,0 +1,12 @@
+---
+- hosts: web
+  become: yes
+
+  pre_tasks:
+    - name: "Add repository for PHP 7.0."
+      apt_repository:
+        repo="ppa:ondrej/php"
+        update_cache=yes
+
+  roles:
+     - install_soft_ubunt1

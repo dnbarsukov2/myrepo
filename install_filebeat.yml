@@ -1,0 +1,20 @@
+---
+- hosts: *
+  become: yes
+  tasks:
+	- name: Copy deb file to remote system
+  	  copy:
+           src: /tmp/filebeat-7.6.2-amd64.deb
+           dest: /tmp/filebeat-7.6.2-amd64.deb
+           remote_src: no
+
+	- name: Install filebeat
+          apt: deb=/tmp/filebeat-7.6.2-amd64.deb
+          notify: filebeat systemd
+
+  handlers:
+        - name: filebeat systemd
+            systemd:
+                   name: filebeat.service
+                   enabled: yes
+                   state: started

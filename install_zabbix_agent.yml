@@ -1,6 +1,6 @@
 ---
 
-  - hosts: all
+  - hosts: ubuntu
     become: yes
     tasks:
             - name: Install Zabbix agent on CentOS
@@ -19,11 +19,10 @@
                       ansible_os_family == "Debian"
               notify:
                       zabbix-agent systemd
-            - name: Change zabbix config
-              lineinfile:
-                      path: /etc/zabbix/zabbix_agentd.conf
-                      regexp: '^(.*)Server=(.*)$'
-                      line: 'Server=51.250.71.64'
+            - name: Replace zabbix config
+              template:
+                      src: /etc/ansible/common/files/zabbix_agentd.conf
+                      dest: /etc/zabbix/zabbix_agentd.conf
     handlers:
             - name: zabbix-agent systemd
               systemd:
